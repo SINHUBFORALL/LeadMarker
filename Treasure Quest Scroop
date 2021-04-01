@@ -6,7 +6,7 @@ local Root = chr.HumanoidRootPart
 
 pcall(function()
 wait()
-game:GetService("ReplicatedStorage").Lobby.Remotes.CreateSquad:FireServer(Dungeon,Difficulty, Gamemode, "Solo")
+game:GetService("ReplicatedStorage").Lobby.Remotes.CreateSquad:FireServer(_G.Dungeon,_G.Difficulty, _G.Gamemode, "Solo")
 wait()
 game:GetService("ReplicatedStorage").Lobby.Remotes.StartGame:FireServer()
 end)

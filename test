@@ -1,1 +1,0 @@
-game:GetService("ReplicatedStorage").Lobby.Remotes.CreateSquad:FireServer(_G.Dungeon,_G.Difficulty,_G.Gamemode, "Solo")

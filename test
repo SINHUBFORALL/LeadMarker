@@ -1,0 +1,101 @@
+pcall(function()
+    game.Players.LocalPlayer.Character.LocalScript:Destroy()
+end)
+
+local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
+
+local UI = Material.Load({
+     Title = "Kronos - contenido eliminado",
+     Style = 1,
+     SizeX = 250,
+     SizeY = 250,
+     Theme = "Dark"
+})
+
+local main = UI.New({
+    Title = "Main"
+})
+
+local playerstuff = UI.New({
+    Title = "Player"
+})
+
+UI.Banner({
+    Text = "Thanks for using the script, " .. game.Players.LocalPlayer.Name .. "! | " .. "Discord is https://discord.gg/bgb9wgtdQj"
+})
+
+
+main.Toggle({
+    Text = "AutoPunch",
+    Enabled = false,
+    Callback = function(t)
+        getgenv().AutoPunch = t 
+        while getgenv().AutoPunch == true do
+            wait(0.5)
+            game:GetService("ReplicatedStorage").Taijutsu:FireServer()
+        end
+    end
+})
+
+farmer = false
+main.Toggle({
+    Text = "AutoFarmPlayers",
+    Callback = function(t)
+        farmer = t
+    end
+})
+
+playerstuff.Slider({
+    Text = "WalkSpeed",
+    Callback = function(value)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
+    end,
+    Min = 16,
+    Max = 250,
+    Def = 16
+})
+
+playerstuff.Slider({
+    Text = "JumpPower",
+    Callback = function(value)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = value
+    end,
+    Min = 50,
+    Max = 350,
+    Def = 50
+})
+
+local noclip = false
+
+main.Toggle({
+    Text = "Noclip",
+    Enabled = false,
+    Callback = function(t)
+        noclip = t
+    end
+})
+
+coroutine.wrap(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if noclip == true then
+            game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+        end
+    end)
+end)()
+
+coroutine.wrap(function()
+    while wait() do
+        if farmer == true then
+            pcall(function()
+                for i,v in pairs(game.Players:GetChildren()) do
+                    if v:IsA("Player") and v ~= game.Players.LocalPlayer then
+                        repeat
+                            wait()
+                            game.Players.LocalPlayer.Character.Humanoid.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame * CFrame.new(0,-3,0) * CFrame.Angles(math.rad(90),0,0)
+                        until v.Character.Humanoid.Health <= 0 or farmer == false
+                    end
+                end
+            end)
+        end
+    end
+end)()

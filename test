@@ -86,16 +86,14 @@ end)()
 coroutine.wrap(function()
     while wait() do
         if farmer == true then
-            pcall(function()
                 for i,v in pairs(game.Players:GetChildren()) do
                     if v:IsA("Player") and v ~= game.Players.LocalPlayer then
                         repeat
                             wait()
-                            game.Players.LocalPlayer.Character.Humanoid.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame * CFrame.new(0,-3,0) * CFrame.Angles(math.rad(90),0,0)
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame * CFrame.new(0,-3,0) * CFrame.Angles(math.rad(90),0,0)
                         until v.Character.Humanoid.Health <= 0 or farmer == false
                     end
                 end
-            end)
         end
     end
 end)()
